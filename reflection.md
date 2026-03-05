@@ -8,6 +8,10 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - List at least two concrete bugs you noticed at the start  
   (for example: "the secret number kept changing" or "the hints were backwards").
 
+  1- "Game over" button doesn't work
+  2- "Go LOWER"/"Go HIGHER" accuracy (comparing with the secret var)
+  3-
+
 ---
 
 ## 2. How did you use AI as a teammate?
