@@ -30,7 +30,10 @@ It wrote the code, ran away, and now the game is unplayable.
 - Find error output of the level and input numbers (to guess), accoring the variable and logic. Change some mathematical methods, error symbol, and entire function to make functional.
 
 ## 📸 Demo
+WINNING 🤩
 - [![Watch the demo](demo.mp4)
+LOSING 😥
+- [![Watch the demo](losing-demo.mp4)
 
 ## 🚀 Stretch Features
 
