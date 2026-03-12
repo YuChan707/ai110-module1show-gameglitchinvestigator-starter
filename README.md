@@ -25,14 +25,14 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- Guess random number, depending of the difficulties level and reset the game
+- Difficult level did not applie to the game
+- Find error output of the level and input numbers (to guess), accoring the variable and logic. Change some mathematical methods, error symbol, and entire function to make functional.
 
 ## 📸 Demo
 
-- [ ] [Insert a screenshot of your fixed, winning game here]
 
 ## 🚀 Stretch Features
 
-- [ ] [If you choose to complete Challenge 4, insert a screenshot of your Enhanced Game UI here]
+- ![Game Screenshot](screenshot.png)
+

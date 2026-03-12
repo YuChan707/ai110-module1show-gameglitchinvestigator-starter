@@ -1,6 +1,10 @@
 import random
 import streamlit as st
 
+OUTCOME_WIN = "Win"
+OUTCOME_TOO_HIGH = "Too High"
+OUTCOME_TOO_LOW = "Too Low"
+
 def get_range_for_difficulty(difficulty: str):
     if difficulty == "Easy":
         return 1, 20
@@ -33,36 +37,36 @@ def parse_guess(raw: str):
 
 
 def check_guess(guess, secret):
-    if guess == secret: 
-        return "Win", "🎉 Correct!"
+    if guess == secret:
+        return OUTCOME_WIN, "🎉 Correct!"
 
     try:
         if guess < secret: #wrong comparation
-            return "Too High", "📈 Go HIGHER!"
+            return OUTCOME_TOO_HIGH, "📈 Go HIGHER!"
         else:
-            return "Too Low", "📉 Go LOWER!"
+            return OUTCOME_TOO_LOW, "📉 Go LOWER!"
     except TypeError:
         g = str(guess)
         if g == secret:
-            return "Win", "🎉 Correct!"
+            return OUTCOME_WIN, "🎉 Correct!"
         if g > secret:
-            return "Too High", "📈 Go HIGHER!"
-        return "Too Low", "📉 Go LOWER!"
+            return OUTCOME_TOO_HIGH, "📈 Go HIGHER!"
+        return OUTCOME_TOO_LOW, "📉 Go LOWER!"
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
-    if outcome == "Win":
+    if outcome == OUTCOME_WIN:
         points = 100 - 10 * (attempt_number + 1)
         if points < 10:
             points = 10
         return current_score + points
 
-    if outcome == "Too High":
+    if outcome == OUTCOME_TOO_HIGH:
         if attempt_number % 2 == 0:
             return current_score + 5
         return current_score - 5
 
-    if outcome == "Too Low":
+    if outcome == OUTCOME_TOO_LOW:
         return current_score - 5
 
     return current_score
@@ -91,6 +95,7 @@ low, high = get_range_for_difficulty(difficulty)
 
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
+st.sidebar.metric("Score", st.session_state.score if "score" in st.session_state else 100)
 
 if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high)
@@ -107,6 +112,9 @@ if "status" not in st.session_state:
 
 if "history" not in st.session_state:
     st.session_state.history = []
+
+if "outcomes" not in st.session_state:
+    st.session_state.outcomes = []
 
 st.subheader("Make a guess")
 
@@ -140,8 +148,11 @@ with col3:
 
 if new_game:
     st.session_state.attempts = 0
-    st.session_state.secret = random.randint(1, 100)
-    st.session_state.status = "playing" #This make true, to continue playing
+    st.session_state.secret = random.randint(low, high)
+    st.session_state.status = "playing"
+    st.session_state.score = 100
+    st.session_state.history = []
+    st.session_state.outcomes = []
     st.success("New game started.")
     st.rerun()
 
@@ -175,14 +186,28 @@ if submit:
         secret = st.session_state.secret
 
         outcome, message = check_guess(guess_int, secret)
+        st.session_state.outcomes.append(outcome)
 
         if show_hint:
-            st.warning(message)
+            distance = abs(guess_int - secret)
+            range_size = high - low
+            pct = distance / range_size
+            if pct < 0.05:
+                temp = "🔥🔥 Very Hot!"
+            elif pct < 0.15:
+                temp = "🔥 Hot!"
+            elif pct < 0.30:
+                temp = "🌡️ Warm"
+            elif pct < 0.50:
+                temp = "❄️ Cold"
+            else:
+                temp = "🧊 Freezing"
+            st.warning(f"{message}  |  {temp}")
 
         #update the subtract operation
         st.session_state.score = st.session_state.score - (100 // attempt_limit)
 
-        if outcome == "Win":
+        if outcome == OUTCOME_WIN:
             st.balloons()
             st.session_state.status = "won"
             st.success(
@@ -197,6 +222,23 @@ if submit:
                     f"The secret was {st.session_state.secret}. "
                     f"Score: {st.session_state.score}"
                 )
+
+if st.session_state.history:
+    with st.expander("Session Summary", expanded=False):
+        valid_history = [g for g in st.session_state.history if isinstance(g, int)]
+        rows = []
+        for i, guess in enumerate(valid_history):
+            outcome = st.session_state.outcomes[i] if i < len(st.session_state.outcomes) else "-"
+            if outcome == OUTCOME_WIN:
+                icon = "🎉 Win"
+            elif outcome == OUTCOME_TOO_HIGH:
+                icon = "📈 Too High"
+            elif outcome == OUTCOME_TOO_LOW:
+                icon = "📉 Too Low"
+            else:
+                icon = outcome
+            rows.append({"#": i + 1, "Guess": guess, "Result": icon})
+        st.table(rows)
 
 st.divider()
 st.caption("Built by an AI that claims this code is production-ready.")
