@@ -22,6 +22,9 @@ errors/bugs:
 7) if the "input" is the same number, it should not take. It should said "you already type this number"
 8) Score show randoms numbers. It should start by 100, and mathemcatically mines x. x is 100/by attemps. entire number value 
 9) set limmits accortind the difficulty
-4) when enter 0, attemps should not be add 1(execption)
+10) when enter 0, attemps should not be add 1 (execption)
+11) if number is higher than the max high number. it should return "You get bigger than {high}"
+12) when enter a higher numb than the max high number, attemps should not be add 1 (execption)
+
 
 Second try (after fix)

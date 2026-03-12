@@ -157,6 +157,9 @@ if submit:
     if not ok:
         st.session_state.history.append(raw_guess)
         st.error(err)
+    #check error if the value is higher what is the capacity
+    elif guess_int > high:
+        st.error(f"You get bigger than {high}.")
     else:
         st.session_state.attempts += 1 #only work after summit and check there is not error
         st.session_state.history.append(guess_int)
