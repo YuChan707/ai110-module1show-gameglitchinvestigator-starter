@@ -99,7 +99,8 @@ if "attempts" not in st.session_state:
     st.session_state.attempts = 1
 
 if "score" not in st.session_state:
-    st.session_state.score = 0
+    #set by 100, later it will be subtract or just show the final score
+    st.session_state.score = 100
 
 if "status" not in st.session_state:
     st.session_state.status = "playing"
@@ -178,11 +179,8 @@ if submit:
         if show_hint:
             st.warning(message)
 
-        st.session_state.score = update_score(
-            current_score=st.session_state.score,
-            outcome=outcome,
-            attempt_number=st.session_state.attempts,
-        )
+        #update the subtract operation
+        st.session_state.score = st.session_state.score - (100 // attempt_limit)
 
         if outcome == "Win":
             st.balloons()
