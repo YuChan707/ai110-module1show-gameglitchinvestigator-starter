@@ -160,6 +160,9 @@ if submit:
     #check error if the value is higher what is the capacity
     elif guess_int > high:
         st.error(f"You get bigger than {high}.")
+        #check the history, can't repeat same number
+    elif guess_int in st.session_state.history:
+        st.error("You already typed this number.")
     else:
         st.session_state.attempts += 1 #only work after summit and check there is not error
         st.session_state.history.append(guess_int)
