@@ -26,6 +26,9 @@ def parse_guess(raw: str):
     except Exception:
         return False, None, "That is not a number."
 
+    if value == 0:
+        return False, None, "Guess must not be 0." #IT CAN NOT USE 0
+
     return True, value, None
 
 
@@ -158,7 +161,7 @@ if submit:
         st.error(err)
     else:
         st.session_state.history.append(guess_int)
-        
+
         #NOT NEED THIS CODE
         #if st.session_state.attempts % 2 == 0:
         #    secret = str(st.session_state.secret)
