@@ -14,12 +14,12 @@ Out of attempts! The secret was 33. Score: -15
 
 errors/bugs:
 1) Attempts left: not end by 0 ✅
-2) Score is not between 1 to 100
+2) Score is not between 1 to 100 ✅
 3) Not "0" ✅
 4) When put 100 (and all other number) need said "Go LOWER!"✅
 5) Level difficulty in range and attempts did not show up and the title update ✅
 6) "Game over" button doesn't work. Reset summation code ✅
-7) if the "input" is the same number, it should not take. It should said "you already type this number" & attempt number is execption
+7) if the "input" is the same number, it should not take. It should said "you already type this number" & attempt number is execption ✅
 8) Score show randoms numbers. It should start by 100, and mathemcatically mines x. x is 100/by attemps. entire number value 
 9) when enter 0, attemps should not be add 1 (execption) ✅
 10) Set limmits accorting the difficulty. if number is higher than the max high number. it should return "You get bigger than {high}" ✅
