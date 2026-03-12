@@ -152,14 +152,13 @@ if st.session_state.status != "playing":
     st.stop()
 
 if submit:
-    st.session_state.attempts += 1
-
     ok, guess_int, err = parse_guess(raw_guess)
 
     if not ok:
         st.session_state.history.append(raw_guess)
         st.error(err)
     else:
+        st.session_state.attempts += 1 #only work after summit and check there is not error
         st.session_state.history.append(guess_int)
 
         #NOT NEED THIS CODE
