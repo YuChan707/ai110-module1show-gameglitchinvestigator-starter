@@ -30,8 +30,9 @@ def parse_guess(raw: str):
     except Exception:
         return False, None, "That is not a number."
 
-    if value == 0:
-        return False, None, "Guess must not be 0." #IT CAN NOT USE 0
+    #update the possible values in the input
+    if value <= 0:
+        return False, None, "Guess must be a positive number." #IT CAN NOT USE 0 OR NEGATIVE
 
     return True, value, None
 
@@ -40,18 +41,19 @@ def check_guess(guess, secret):
     if guess == secret:
         return OUTCOME_WIN, "🎉 Correct!"
 
+    #update the comparison
     try:
-        if guess < secret: #wrong comparation
-            return OUTCOME_TOO_HIGH, "📈 Go HIGHER!"
+        if guess < secret: 
+            return OUTCOME_TOO_LOW, "📈 Go HIGHER!"
         else:
-            return OUTCOME_TOO_LOW, "📉 Go LOWER!"
+            return OUTCOME_TOO_HIGH, "📉 Go LOWER!"
     except TypeError:
         g = str(guess)
         if g == secret:
             return OUTCOME_WIN, "🎉 Correct!"
         if g > secret:
-            return OUTCOME_TOO_HIGH, "📈 Go HIGHER!"
-        return OUTCOME_TOO_LOW, "📉 Go LOWER!"
+            return OUTCOME_TOO_HIGH, "📉 Go LOWER!"
+        return OUTCOME_TOO_LOW, "📈 Go HIGHER!"
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
@@ -95,7 +97,6 @@ low, high = get_range_for_difficulty(difficulty)
 
 st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
-st.sidebar.metric("Score", st.session_state.score if "score" in st.session_state else 100)
 
 if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high)
@@ -179,17 +180,16 @@ if submit:
         st.session_state.attempts += 1 #only work after summit and check there is not error
         st.session_state.history.append(guess_int)
 
-        #NOT NEED THIS CODE
-        #if st.session_state.attempts % 2 == 0:
-        #    secret = str(st.session_state.secret)
-        #else:
-        secret = st.session_state.secret
+        if st.session_state.attempts % 2 == 0:
+            secret = str(st.session_state.secret)
+        else:
+            secret = st.session_state.secret
 
         outcome, message = check_guess(guess_int, secret)
         st.session_state.outcomes.append(outcome)
 
         if show_hint:
-            distance = abs(guess_int - secret)
+            distance = abs(guess_int - st.session_state.secret)
             range_size = high - low
             pct = distance / range_size
             if pct < 0.05:
@@ -222,6 +222,8 @@ if submit:
                     f"The secret was {st.session_state.secret}. "
                     f"Score: {st.session_state.score}"
                 )
+
+st.sidebar.metric("Score", st.session_state.score)
 
 if st.session_state.history:
     with st.expander("Session Summary", expanded=False):
