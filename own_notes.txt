@@ -1,0 +1,23 @@
+numbers test
+
+
+First try
+
+0 - Go LOWER!
+1 - Go LOWER!
+2 - Go LOWER!
+62 - Go HIGHER!
+96 - Go HIGHER!
+100 - Go HIGHER!
+
+Out of attempts! The secret was 33. Score: -15
+
+errors/bugs:
+1) Attempts left: not end by 0 ✅
+2) Score is not between 1 to 100
+3) Not "0" 
+4) When put 100 (and all other number) need said "Go LOWER!"✅
+5) Level difficulty in range and attempts did not show up and the title update
+6) "Game over" button doesn't work. Reset summation code ✅
+
+Second try (after fix)
