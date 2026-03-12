@@ -30,11 +30,11 @@ def parse_guess(raw: str):
 
 
 def check_guess(guess, secret):
-    if guess == secret:
+    if guess == secret: 
         return "Win", "🎉 Correct!"
 
     try:
-        if guess < secret:
+        if guess < secret: #wrong comparation
             return "Too High", "📈 Go HIGHER!"
         else:
             return "Too Low", "📉 Go LOWER!"
@@ -158,7 +158,8 @@ if submit:
         st.error(err)
     else:
         st.session_state.history.append(guess_int)
-
+        
+        #NOT NEED THIS CODE
         #if st.session_state.attempts % 2 == 0:
         #    secret = str(st.session_state.secret)
         #else:

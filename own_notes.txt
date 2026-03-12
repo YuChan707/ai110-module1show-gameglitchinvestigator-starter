@@ -17,7 +17,9 @@ errors/bugs:
 2) Score is not between 1 to 100
 3) Not "0" 
 4) When put 100 (and all other number) need said "Go LOWER!"✅
-5) Level difficulty in range and attempts did not show up and the title update
+5) Level difficulty in range and attempts did not show up and the title update ✅
 6) "Game over" button doesn't work. Reset summation code ✅
+7) if the "input" is the same number, it should not take. It should said "you already type this number"
+8) Score show randoms numbers. It should start by 100, and mathemcatically mines x. x is 100/by attemps. entire number value 
 
 Second try (after fix)
